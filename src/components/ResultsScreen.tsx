@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ResultsScreenProps {
   score: number;
@@ -8,23 +9,24 @@ interface ResultsScreenProps {
 }
 
 export const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, total, onRestart, onNewFile }) => {
+  const { t } = useTranslation();
   const percentage = Math.round((score / total) * 100);
   
   let message = '';
 
   if (percentage === 100) {
-    message = '¡Perfecto! 🏆';
+    message = t('results.perfect');
   } else if (percentage >= 80) {
-    message = '¡Excelente trabajo! 🌟';
+    message = t('results.excellent');
   } else if (percentage >= 50) {
-    message = 'Bien hecho 👍';
+    message = t('results.good');
   } else {
-    message = 'Sigue practicando 💪';
+    message = t('results.practice');
   }
 
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center animate-in zoom-in-95 duration-500 w-full max-w-2xl">
-      <h2 className="text-4xl font-bold text-stone-900 mb-2 font-serif">Resultados</h2>
+      <h2 className="text-4xl font-bold text-stone-900 mb-2 font-serif">{t('results.title')}</h2>
       <p className="text-xl font-medium mb-12 text-stone-600 italic font-serif">{message}</p>
 
       <div className="card-result">
@@ -41,13 +43,13 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, total, onRe
           onClick={onRestart}
           className="flex-1 btn-primary"
         >
-          Repetir Examen
+          {t('results.retry')}
         </button>
         <button
           onClick={onNewFile}
           className="flex-1 btn-secondary"
         >
-          Cargar Otro CSV
+          {t('results.newFile')}
         </button>
       </div>
     </div>

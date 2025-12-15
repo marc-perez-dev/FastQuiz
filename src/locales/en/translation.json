@@ -1,0 +1,36 @@
+{
+  "app": {
+    "title": "FastQuiz",
+    "exit": "Exit",
+    "uploadTitle": "Upload your questions",
+    "uploadDesc": "Upload a CSV file to automatically generate an interactive quiz. The format is flexible and supports multiple correct answers.",
+    "csvExampleTitle": "CSV Format Example"
+  },
+  "upload": {
+    "dragDrop": "Drag your CSV here",
+    "orClick": "or click to select",
+    "selectFile": "Select File",
+    "processing": "Processing file...",
+    "errorExtension": "Please upload a file with .csv extension",
+    "errorProcessing": "An error occurred while processing the file.",
+    "errorEmpty": "The CSV file does not contain valid questions or has an incorrect format."
+  },
+  "quiz": {
+    "question": "Question {{current}} of {{total}}",
+    "score": "Score: {{score}}",
+    "next": "Next Question",
+    "viewResults": "View Results"
+  },
+  "results": {
+    "title": "Results",
+    "perfect": "Perfect! 🏆",
+    "excellent": "Excellent work! 🌟",
+    "good": "Well done 👍",
+    "practice": "Keep practicing 💪",
+    "retry": "Retry Quiz",
+    "newFile": "Upload Another CSV"
+  },
+  "questionCard": {
+     "confirm": "Check Answer"
+  }
+}

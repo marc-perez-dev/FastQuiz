@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { parseCSV } from '../utils/csvParser';
 import type { Question } from '../types';
 
@@ -7,6 +8,7 @@ interface FileUploadProps {
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +18,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
 
     const file = files[0];
     if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
-      setError('Por favor, sube un archivo con extensión .csv');
+      setError(t('upload.errorExtension'));
       return;
     }
 
@@ -26,13 +28,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
     try {
       const questions = await parseCSV(file);
       if (questions.length === 0) {
-        setError('El archivo CSV no contiene preguntas válidas o tiene un formato incorrecto.');
+        setError(t('upload.errorEmpty'));
       } else {
         onLoad(questions);
       }
     } catch (e) {
       console.error(e);
-      setError('Ocurrió un error al procesar el archivo.');
+      setError(t('upload.errorProcessing'));
     } finally {
       setIsLoading(false);
     }
@@ -72,10 +74,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
         </svg>
 
         <p className="mb-2 text-xl font-bold text-stone-900">
-          Arrastra tu CSV aquí
+          {t('upload.dragDrop')}
         </p>
         <p className="text-sm text-stone-500 mb-8 font-medium">
-          o haz clic para seleccionar
+          {t('upload.orClick')}
         </p>
 
         <input
@@ -89,11 +91,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
           htmlFor="file-upload"
           className="btn-upload"
         >
-          Seleccionar Archivo
+          {t('upload.selectFile')}
         </label>
       </div>
 
-      {isLoading && <p className="mt-6 text-stone-900 font-medium animate-pulse">Procesando archivo...</p>}
+      {isLoading && <p className="mt-6 text-stone-900 font-medium animate-pulse">{t('upload.processing')}</p>}
       
       {error && (
         <div className="error-box">

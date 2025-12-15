@@ -1,0 +1,36 @@
+{
+  "app": {
+    "title": "FastQuiz",
+    "exit": "Salir",
+    "uploadTitle": "Sube tus preguntas",
+    "uploadDesc": "Carga un archivo CSV para generar automáticamente un examen interactivo. El formato es flexible y soporta múltiples respuestas correctas.",
+    "csvExampleTitle": "Ejemplo de formato CSV"
+  },
+  "upload": {
+    "dragDrop": "Arrastra tu CSV aquí",
+    "orClick": "o haz clic para seleccionar",
+    "selectFile": "Seleccionar Archivo",
+    "processing": "Procesando archivo...",
+    "errorExtension": "Por favor, sube un archivo con extensión .csv",
+    "errorProcessing": "Ocurrió un error al procesar el archivo.",
+    "errorEmpty": "El archivo CSV no contiene preguntas válidas o tiene un formato incorrecto."
+  },
+  "quiz": {
+    "question": "Pregunta {{current}} de {{total}}",
+    "score": "Aciertos: {{score}}",
+    "next": "Siguiente Pregunta",
+    "viewResults": "Ver Resultados"
+  },
+  "results": {
+    "title": "Resultados",
+    "perfect": "¡Perfecto! 🏆",
+    "excellent": "¡Excelente trabajo! 🌟",
+    "good": "Bien hecho 👍",
+    "practice": "Sigue practicando 💪",
+    "retry": "Repetir Examen",
+    "newFile": "Cargar Otro CSV"
+  },
+  "questionCard": {
+     "confirm": "Confirmar Respuesta"
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Question, Option } from '../types';
 import { twMerge } from 'tailwind-merge';
 
@@ -17,6 +18,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onToggleOption,
   onConfirm,
 }) => {
+  const { t } = useTranslation();
   
   // Helper para determinar estilos
   const getOptionStyles = (option: Option) => {
@@ -100,7 +102,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             disabled={selectedOptionIds.length === 0}
             className="btn-primary"
           >
-            Confirmar Respuesta
+            {t('questionCard.confirm')}
           </button>
         )}
       </div>

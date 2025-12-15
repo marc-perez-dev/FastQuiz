@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Question } from '../types';
 import { QuestionCard } from './QuestionCard';
 
@@ -8,6 +9,7 @@ interface QuizRunnerProps {
 }
 
 export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
@@ -98,8 +100,8 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     <div className="w-full flex flex-col items-center">
       {/* Barra de progreso */}
       <div className="w-full max-w-2xl px-4 mb-4 flex justify-between text-sm text-gray-500 dark:text-gray-400 font-medium">
-        <span>Pregunta {currentIndex + 1} de {questions.length}</span>
-        <span>Aciertos: {score}</span>
+        <span>{t('quiz.question', { current: currentIndex + 1, total: questions.length })}</span>
+        <span>{t('quiz.score', { score })}</span>
       </div>
       
       <div className="w-full max-w-2xl px-4 mb-6">
@@ -126,7 +128,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
             onClick={handleNext}
             className="btn-next"
           >
-            {currentIndex === questions.length - 1 ? 'Ver Resultados' : 'Siguiente Pregunta'}
+            {currentIndex === questions.length - 1 ? t('quiz.viewResults') : t('quiz.next')}
             <span>→</span>
           </button>
         </div>
