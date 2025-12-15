@@ -37,7 +37,7 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
     setQuestions(newQs);
   };
 
-  const updateOption = (qIndex: number, oIndex: number, field: keyof Option, value: any) => {
+  const updateOption = <K extends keyof Option>(qIndex: number, oIndex: number, field: K, value: Option[K]) => {
     const newQs = [...questions];
     const newOpts = [...newQs[qIndex].options];
     newOpts[oIndex] = { ...newOpts[oIndex], [field]: value };

@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { parseCSV } from '../utils/csvParser';
-import type { CSVFormat } from '../utils/csvParser';
 import type { Question } from '../types';
 
 interface FileUploadProps {
@@ -14,7 +13,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFiles = async (files: FileList | null) => {
+  const handleFiles = useCallback(async (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
     const file = files[0];
@@ -39,7 +38,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t, setError, setIsLoading, onLoad]);
 
   const onDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -55,7 +54,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
     e.preventDefault();
     setIsDragging(false);
     handleFiles(e.dataTransfer.files);
-  }, []);
+  }, [handleFiles]);
 
   return (
     <div className="flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto">

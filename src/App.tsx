@@ -95,7 +95,7 @@ function App() {
             
             <div className="flex flex-col items-center mt-8 mb-8 w-full max-w-md mx-auto space-y-3">
               <div className="relative w-full text-center mb-1">
-                <span className="bg-[#fcfbf9] px-2 text-sm text-stone-400 font-medium">O si lo prefieres</span>
+                <span className="bg-[#fcfbf9] px-2 text-sm text-stone-400 font-medium">{t('app.orPreference')}</span>
               </div>
               
               <button 
@@ -125,10 +125,20 @@ function App() {
               </h3>
               <div className="overflow-x-auto">
                 <code className="text-sm text-stone-800 font-mono whitespace-pre block">
-                  Pregunta,Opción 1,Correcta?,Opción 2,Correcta?,...<br/>
-                  "¿Capital de Francia?","París",TRUE,"Londres",FALSE<br/>
-                  "¿Colores primarios luz?","Rojo",TRUE,"Verde",TRUE,"Amarillo",FALSE
+                  {t('app.csvExampleHeader')}<br/>
+                  {t('app.csvExampleRow1')}<br/>
+                  {t('app.csvExampleRow2')}
                 </code>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-stone-200">
+                <p className="text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
+                  {t('app.otherFormats')}
+                </p>
+                <div className="space-y-1 text-xs text-stone-600 font-mono">
+                  <p>{t('app.formatSimple')}</p>
+                  <p>{t('app.formatLegacy')}</p>
+                </div>
               </div>
             </div>
           </div>

@@ -6,7 +6,14 @@
     "uploadDesc": "Upload a CSV file to automatically generate an interactive quiz. The format is flexible and supports multiple correct answers.",
     "csvExampleTitle": "CSV Format Example",
     "manualCreate": "Create Quiz Manually",
-    "uploadToEdit": "Upload & Edit CSV"
+    "uploadToEdit": "Upload & Edit CSV",
+    "otherFormats": "Other supported formats:",
+    "formatSimple": "Simple: Question, Correct Answer, Incorrect 1, Incorrect 2...",
+    "formatLegacy": "Legacy: Question, Opt1, Opt2, Opt3, Opt4, IsCorrect1, IsCorrect2...",
+    "orPreference": "Or if you prefer",
+    "csvExampleHeader": "Question,Option 1,Correct?,Option 2,Correct?,...",
+    "csvExampleRow1": "\"Capital of France?\",\"Paris\",TRUE,\"London\",FALSE",
+    "csvExampleRow2": "\"Primary light colors?\",\"Red\",TRUE,\"Green\",TRUE,\"Yellow\",FALSE"
   },
   "upload": {
     "dragDrop": "Drag your CSV here",

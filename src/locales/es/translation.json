@@ -6,7 +6,14 @@
     "uploadDesc": "Carga un archivo CSV para generar automáticamente un examen interactivo. El formato es flexible y soporta múltiples respuestas correctas.",
     "csvExampleTitle": "Ejemplo de formato CSV",
     "manualCreate": "Crear Quiz Manualmente",
-    "uploadToEdit": "Subir y Editar CSV"
+    "uploadToEdit": "Subir y Editar CSV",
+    "otherFormats": "Otros formatos soportados:",
+    "formatSimple": "Simple: Pregunta, Respuesta Correcta, Incorrecta 1, Incorrecta 2...",
+    "formatLegacy": "Heredado: Pregunta, Op1, Op2, Op3, Op4, EsCorrecta1, EsCorrecta2...",
+    "orPreference": "O si lo prefieres",
+    "csvExampleHeader": "Pregunta,Opción 1,Correcta?,Opción 2,Correcta?,...",
+    "csvExampleRow1": "\"¿Capital de Francia?\",\"París\",TRUE,\"Londres\",FALSE",
+    "csvExampleRow2": "\"¿Colores primarios luz?\",\"Rojo\",TRUE,\"Verde\",TRUE,\"Amarillo\",FALSE"
   },
   "upload": {
     "dragDrop": "Arrastra tu CSV aquí",

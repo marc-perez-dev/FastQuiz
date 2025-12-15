@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Question } from '../types';
 import { QuestionCard } from './QuestionCard';
@@ -17,8 +17,13 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
 
   // Reiniciar estado interno al cambiar de pregunta
   useEffect(() => {
-    setSelectedOptionIds([]);
-    setIsValidated(false);
+    // Defer state updates to avoid synchronous setState calls within the effect
+    const timeoutId = setTimeout(() => {
+      setSelectedOptionIds([]);
+      setIsValidated(false);
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [currentIndex]);
 
   const currentQuestion = questions[currentIndex];
@@ -31,7 +36,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     );
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     setIsValidated(true);
 
     // Lógica estricta: Deben coincidir exactamente los conjuntos
@@ -46,15 +51,15 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     if (isCorrect) {
       setScore(prev => prev + 1);
     }
-  };
+  }, [setIsValidated, currentQuestion, selectedOptionIds, setScore]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(prev => prev + 1);
     } else {
       onFinish(score, questions.length); // Nota: score ya se actualizó en handleConfirm
     }
-  };
+  }, [currentIndex, questions.length, onFinish, score, setCurrentIndex]);
 
   // Manejador de teclado global
   useEffect(() => {
@@ -94,7 +99,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isValidated, selectedOptionIds, currentQuestion, currentIndex, questions.length]); // Dependencias importantes para closure actualizado
+  }, [isValidated, selectedOptionIds, currentQuestion, currentIndex, questions.length, handleConfirm, handleNext]);
 
   return (
     <div className="w-full flex flex-col items-center">

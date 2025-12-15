@@ -3,6 +3,10 @@ import type { Question, Option } from '../types';
 
 export type CSVFormat = 'standard' | 'legacy' | 'simple' | 'auto';
 
+// 1. Centralización de "La Verdad" (Constantes)
+const TRUTHY_VALUES = ['true', 'verdadero', 'yes', 'si', 'sí', 'v', 't', 's', '1'];
+const FALSY_VALUES = ['false', 'falso', 'no', 'f', 'n', '0'];
+
 export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Question[]> => {
   return new Promise((resolve, reject) => {
     Papa.parse(file, {
@@ -20,28 +24,44 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
 
             // Check headers first
             const headerStr = header.join(' ').toLowerCase();
-            if (headerStr.includes('correcta1') || headerStr.includes('respuesta1')) {
+            
+            // 2. Actualización de la Lógica de Detección (Headers)
+            const legacyKeywords = [
+              'correcta1', 'respuesta1', 'iscorrect1', 'answer1', 'correct1',
+              'correcta 1', 'respuesta 1', 'is correct 1', 'answer 1', 'correct 1'
+            ];
+
+            const standardKeywords = [
+              'correcta?', 'iscorrect', 'opción 1', 'correct?', 'option 1', 'option1',
+              'is correct'
+            ];
+
+            // "correct" y "solución" son peligrosos, los dejamos al final
+            const simpleKeywords = ['respuesta_correcta', 'correct_answer', 'respuesta correcta', 'correct answer', 'solution', 'solución', 'correct'];
+
+            if (legacyKeywords.some(kw => headerStr.includes(kw))) {
               usedFormat = 'legacy';
-            } else if (headerStr.includes('correcta?') || headerStr.includes('iscorrect') || headerStr.includes('opción 1')) {
+            } else if (standardKeywords.some(kw => headerStr.includes(kw))) {
               usedFormat = 'standard';
-            } else if (headerStr.includes('respuesta_correcta') || headerStr.includes('correct_answer') || headerStr.includes('respuesta correcta')) {
+            } else if (simpleKeywords.some(kw => headerStr.includes(kw))) {
               usedFormat = 'simple';
             } else if (firstRow) {
-                          // Check data structure
-                          const isBooleanString = (value: string | undefined): boolean => {
-                            if (typeof value !== 'string') return false;
-                            const normalized = value.trim().toLowerCase();
-                            return ['true', 'verdadero', '1', 'si', 'yes', 'v', 'false', 'falso', '0', 'no', 'f'].includes(normalized);
-                          };
+              // 3. Mejora de la Detección por Contenido (Fallback)
+              const isBooleanString = (value: string | undefined): boolean => {
+                if (typeof value !== 'string') return false;
+                const normalized = value.trim().toLowerCase();
+                return TRUTHY_VALUES.includes(normalized) || FALSY_VALUES.includes(normalized);
+              };
               
-                          // Standard: Question, Option1, IsCorrect1 (index 2)
-                          // Legacy: Question, Opt1, Opt2, Opt3, Opt4, Bool1 (index 5)
-                          
-                          if (firstRow.length > 2 && isBooleanString(firstRow[2])) {
-                            usedFormat = 'standard';
-                          } else if (firstRow.length > 5 && isBooleanString(firstRow[5])) {
-                            usedFormat = 'legacy';
-                          } else {                // If neither standard nor legacy boolean patterns match, assume simple format
+              // Standard: Question, Option1, IsCorrect1 (index 2)
+              // Legacy: Question, Opt1, Opt2, Opt3, Opt4, Bool1 (index 5)
+              
+              if (firstRow.length > 2 && isBooleanString(firstRow[2])) {
+                usedFormat = 'standard';
+              } else if (firstRow.length > 5 && isBooleanString(firstRow[5])) {
+                usedFormat = 'legacy';
+              } else {
+                // If neither standard nor legacy boolean patterns match, assume simple format
                 // (Question, Correct, Incorrect, Incorrect...)
                 usedFormat = 'simple';
               }
@@ -63,11 +83,11 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
 
             const options: Option[] = [];
             
-            // Helper function to convert various string representations to boolean
+            // 4. Actualización del Parser (Conversión de datos)
             const toBoolean = (value: string | undefined): boolean => {
               if (typeof value !== 'string') return false;
               const normalized = value.trim().toLowerCase();
-              return ['true', 'verdadero', '1', 'si', 'yes', 'v'].includes(normalized);
+              return TRUTHY_VALUES.includes(normalized);
             };
 
             if (usedFormat === 'standard') {
