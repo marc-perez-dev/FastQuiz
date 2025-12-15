@@ -4,7 +4,9 @@
     "exit": "Salir",
     "uploadTitle": "Sube tus preguntas",
     "uploadDesc": "Carga un archivo CSV para generar automáticamente un examen interactivo. El formato es flexible y soporta múltiples respuestas correctas.",
-    "csvExampleTitle": "Ejemplo de formato CSV"
+    "csvExampleTitle": "Ejemplo de formato CSV",
+    "manualCreate": "Crear Quiz Manualmente",
+    "uploadToEdit": "Subir y Editar CSV"
   },
   "upload": {
     "dragDrop": "Arrastra tu CSV aquí",
@@ -27,9 +29,16 @@
     "good": "Bien hecho 👍",
     "practice": "Sigue practicando 💪",
     "retry": "Repetir Examen",
-    "newFile": "Cargar Otro CSV"
+    "newFile": "Cargar Otro CSV",
+    "editQuestions": "¿Hay algún error? Editar preguntas"
   },
   "questionCard": {
      "confirm": "Confirmar Respuesta"
+  },
+  "editor": {
+    "cancelTitle": "¿Estás seguro?",
+    "cancelMessage": "Si sales ahora, perderás todos los cambios no guardados.",
+    "confirmExit": "Salir sin guardar",
+    "cancelExit": "Continuar editando"
   }
 }

@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { FileUpload } from './components/FileUpload';
 import { QuizRunner } from './components/QuizRunner';
 import { ResultsScreen } from './components/ResultsScreen';
+import { QuizEditor } from './components/QuizEditor';
 import { LanguageSelector } from './components/LanguageSelector';
 import type { Question } from './types';
-import { shuffleArray } from './utils/csvParser';
+import { shuffleArray, parseCSV } from './utils/csvParser';
 
-type AppState = 'upload' | 'quiz' | 'results';
+type AppState = 'upload' | 'quiz' | 'results' | 'editor';
 
 function App() {
   const { t } = useTranslation();
@@ -34,6 +35,30 @@ function App() {
   const handleNewFile = () => {
     setQuestions([]);
     setAppState('upload');
+  };
+
+  const handleOpenEditor = (initialData: Question[] = []) => {
+    setQuestions(initialData); // Si pasamos [], es nuevo. Si pasamos questions, es editar.
+    setAppState('editor');
+  };
+
+  const handleUploadToEdit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      const parsed = await parseCSV(file, 'auto');
+      if (parsed.length > 0) {
+        handleOpenEditor(parsed);
+      } else {
+        alert(t('upload.errorEmpty'));
+      }
+    } catch (err) {
+      console.error(err);
+      alert(t('upload.errorProcessing'));
+    }
+    // Clear input
+    e.target.value = '';
   };
 
   return (
@@ -68,6 +93,32 @@ function App() {
             </div>
             <FileUpload onLoad={handleLoad} />
             
+            <div className="flex flex-col items-center mt-8 mb-8 w-full max-w-md mx-auto space-y-3">
+              <div className="relative w-full text-center mb-1">
+                <span className="bg-[#fcfbf9] px-2 text-sm text-stone-400 font-medium">O si lo prefieres</span>
+              </div>
+              
+              <button 
+                onClick={() => handleOpenEditor([])}
+                className="btn-secondary w-full py-3 flex items-center justify-center gap-2 group"
+              >
+                <span>✏️</span> {t('app.manualCreate')}
+              </button>
+
+              <div className="w-full relative">
+                 <input 
+                   type="file" 
+                   accept=".csv"
+                   onChange={handleUploadToEdit}
+                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                   title={t('app.uploadToEdit')}
+                 />
+                 <button className="btn-secondary w-full py-3 flex items-center justify-center gap-2 group text-stone-500 hover:text-stone-800 border-stone-300 hover:border-stone-500">
+                    <span>📂</span> {t('app.uploadToEdit')}
+                 </button>
+              </div>
+            </div>
+
             <div className="card-upload-example">
               <h3 className="font-bold mb-4 text-sm uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-2 inline-block">
                 {t('app.csvExampleTitle')}
@@ -91,11 +142,30 @@ function App() {
         )}
 
         {appState === 'results' && (
-          <ResultsScreen 
-            score={finalResult.score} 
-            total={finalResult.total}
-            onRestart={handleRestart}
-            onNewFile={handleNewFile}
+          <div className="flex flex-col w-full items-center">
+            <ResultsScreen 
+              score={finalResult.score} 
+              total={finalResult.total}
+              onRestart={handleRestart}
+              onNewFile={handleNewFile}
+            />
+            <button 
+              onClick={() => handleOpenEditor(questions)}
+              className="mt-6 text-stone-500 hover:text-stone-900 underline text-sm"
+            >
+              {t('results.editQuestions')}
+            </button>
+          </div>
+        )}
+
+        {appState === 'editor' && (
+          <QuizEditor 
+            initialQuestions={questions}
+            onCancel={() => setAppState('upload')}
+            onPlay={(qs) => {
+              setQuestions(qs);
+              setAppState('quiz');
+            }}
           />
         )}
       </main>
