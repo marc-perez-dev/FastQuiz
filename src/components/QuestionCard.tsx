@@ -25,67 +25,68 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     if (!isValidated) {
       // Estado de Selección (Pre-validación)
       if (isSelected) {
-        return "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 ring-1 ring-blue-500";
+        return "border-stone-900 bg-stone-900 text-white ring-0";
       }
-      return "border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300";
+      return "border-stone-300 hover:border-stone-900 bg-white text-stone-800 hover:bg-stone-50";
     }
 
     // Estado Validado
     if (option.isCorrect) {
       // Era correcta
       if (isSelected) {
-        return "border-green-500 bg-green-50 dark:bg-green-900/30 text-green-900 dark:text-green-100 ring-1 ring-green-500"; // Acierto
+        return "border-green-700 bg-green-100 text-green-900 font-medium"; // Acierto
       } else {
-        return "border-green-500 border-dashed bg-green-50/50 dark:bg-green-900/10 text-green-700 dark:text-green-300 opacity-75"; // Correcta no marcada
+        return "border-green-600 border-dashed bg-transparent text-green-800 opacity-75"; // Correcta no marcada
       }
     } else {
       // No era correcta
       if (isSelected) {
-        return "border-red-500 bg-red-50 dark:bg-red-900/30 text-red-900 dark:text-red-100 ring-1 ring-red-500"; // Fallo
+        return "border-red-700 bg-red-100 text-red-900 font-medium"; // Fallo
       }
-      return "border-gray-200 dark:border-gray-700 opacity-50"; // Irrelevante
+      return "border-stone-200 text-stone-400 opacity-50"; // Irrelevante
     }
   };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 leading-relaxed">
+      <div className="bg-[#fcfbf9] border-2 border-stone-900 p-8 mb-8 shadow-[8px_8px_0px_0px_rgba(28,25,23,1)]">
+        <h2 className="text-2xl font-bold text-stone-900 mb-8 leading-snug font-serif">
           {question.statement}
         </h2>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {question.options.map((option, index) => (
             <button
               key={option.id}
               onClick={() => !isValidated && onToggleOption(option.id)}
               disabled={isValidated}
               className={twMerge(
-                "w-full text-left p-4 rounded-lg border transition-all duration-200 flex items-start",
+                "w-full text-left p-5 border-2 transition-all duration-200 flex items-start group",
                 getOptionStyles(option),
-                isValidated ? "cursor-default" : "cursor-pointer active:scale-[0.99]"
+                isValidated ? "cursor-default" : "cursor-pointer active:translate-y-1"
               )}
             >
               {/* Indicador de tecla (Badge) */}
               <div className={twMerge(
-                "flex items-center justify-center w-6 h-6 mr-3 text-xs font-bold rounded border shrink-0",
-                isValidated 
-                  ? "border-transparent text-gray-400 opacity-50"
-                  : "border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800"
+                "flex items-center justify-center w-8 h-8 mr-4 text-sm font-bold border-2 shrink-0 transition-colors",
+                selectedOptionIds.includes(option.id) && !isValidated
+                  ? "border-white text-white" 
+                  : "border-stone-400 text-stone-500 group-hover:border-stone-900 group-hover:text-stone-900",
+                isValidated && "border-transparent opacity-50"
               )}>
                 {index + 1}
               </div>
 
-              <div className="flex-1">
+              <div className="flex-1 text-lg">
                 {option.text}
               </div>
               
               {/* Iconos de feedback */}
               {isValidated && option.isCorrect && (
-                <span className="text-green-600 dark:text-green-400 ml-2">✓</span>
+                <span className="text-green-700 font-bold ml-3 text-xl">✓</span>
               )}
               {isValidated && !option.isCorrect && selectedOptionIds.includes(option.id) && (
-                <span className="text-red-600 dark:text-red-400 ml-2">✗</span>
+                <span className="text-red-700 font-bold ml-3 text-xl">✗</span>
               )}
             </button>
           ))}
@@ -97,7 +98,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           <button
             onClick={onConfirm}
             disabled={selectedOptionIds.length === 0}
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-8 py-4 bg-stone-900 text-[#fcfbf9] font-bold text-sm tracking-wider uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] hover:translate-x-[2px] hover:translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             Confirmar Respuesta
           </button>

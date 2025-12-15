@@ -11,46 +11,41 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, total, onRe
   const percentage = Math.round((score / total) * 100);
   
   let message = '';
-  let colorClass = '';
 
   if (percentage === 100) {
     message = '¡Perfecto! 🏆';
-    colorClass = 'text-green-500';
   } else if (percentage >= 80) {
     message = '¡Excelente trabajo! 🌟';
-    colorClass = 'text-blue-500';
   } else if (percentage >= 50) {
     message = 'Bien hecho 👍';
-    colorClass = 'text-yellow-500';
   } else {
     message = 'Sigue practicando 💪';
-    colorClass = 'text-gray-500';
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center animate-in zoom-in-95 duration-500">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Resultados</h2>
-      <p className={`text-xl font-medium mb-8 ${colorClass}`}>{message}</p>
+    <div className="flex flex-col items-center justify-center p-8 text-center animate-in zoom-in-95 duration-500 w-full max-w-2xl">
+      <h2 className="text-4xl font-bold text-stone-900 mb-2 font-serif">Resultados</h2>
+      <p className="text-xl font-medium mb-12 text-stone-600 italic font-serif">{message}</p>
 
-      <div className="w-48 h-48 rounded-full border-8 border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center mb-10 shadow-inner bg-white dark:bg-gray-800 relative overflow-hidden">
-        <div className="text-5xl font-bold text-gray-900 dark:text-white z-10">
+      <div className="w-64 h-64 border-4 border-stone-900 flex flex-col items-center justify-center mb-12 bg-white shadow-[8px_8px_0px_0px_rgba(28,25,23,1)]">
+        <div className="text-7xl font-bold text-stone-900 tracking-tighter">
           {percentage}%
         </div>
-        <div className="text-sm text-gray-400 z-10 mt-1">
+        <div className="text-lg text-stone-500 mt-2 font-mono border-t-2 border-stone-200 pt-2 w-32">
           {score} / {total}
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">
+      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-lg">
         <button
           onClick={onRestart}
-          className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+          className="flex-1 px-6 py-4 bg-stone-900 text-[#fcfbf9] font-bold tracking-wider uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
         >
           Repetir Examen
         </button>
         <button
           onClick={onNewFile}
-          className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          className="flex-1 px-6 py-4 bg-transparent border-2 border-stone-900 text-stone-900 font-bold tracking-wider uppercase hover:bg-stone-100 transition-colors"
         >
           Cargar Otro CSV
         </button>
