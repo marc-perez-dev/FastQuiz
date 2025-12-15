@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { parseCSV } from '../utils/csvParser';
+import type { CSVFormat } from '../utils/csvParser';
 import type { Question } from '../types';
 
 interface FileUploadProps {
@@ -26,7 +27,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
     setIsLoading(true);
 
     try {
-      const questions = await parseCSV(file);
+      const questions = await parseCSV(file, 'auto');
       if (questions.length === 0) {
         setError(t('upload.errorEmpty'));
       } else {

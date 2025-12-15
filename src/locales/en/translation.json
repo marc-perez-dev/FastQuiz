@@ -10,7 +10,6 @@
     "dragDrop": "Drag your CSV here",
     "orClick": "or click to select",
     "selectFile": "Select File",
-    "processing": "Processing file...",
     "errorExtension": "Please upload a file with .csv extension",
     "errorProcessing": "An error occurred while processing the file.",
     "errorEmpty": "The CSV file does not contain valid questions or has an incorrect format."
