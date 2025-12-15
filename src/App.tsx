@@ -38,7 +38,7 @@ function App() {
       <header className="p-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            CSV Quiz Runner
+            FastQuiz
           </h1>
           {appState !== 'upload' && (
             <button 
