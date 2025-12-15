@@ -55,7 +55,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         </h2>
 
         <div className="space-y-3">
-          {question.options.map((option) => (
+          {question.options.map((option, index) => (
             <button
               key={option.id}
               onClick={() => !isValidated && onToggleOption(option.id)}
@@ -66,6 +66,16 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 isValidated ? "cursor-default" : "cursor-pointer active:scale-[0.99]"
               )}
             >
+              {/* Indicador de tecla (Badge) */}
+              <div className={twMerge(
+                "flex items-center justify-center w-6 h-6 mr-3 text-xs font-bold rounded border shrink-0",
+                isValidated 
+                  ? "border-transparent text-gray-400 opacity-50"
+                  : "border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800"
+              )}>
+                {index + 1}
+              </div>
+
               <div className="flex-1">
                 {option.text}
               </div>

@@ -54,6 +54,46 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     }
   };
 
+  // Manejador de teclado global
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignorar si el usuario está escribiendo en un input (aunque no hay inputs aquí, es buena práctica)
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      const key = e.key;
+
+      // Selección numérica (1-9)
+      if (!isValidated && /^[1-9]$/.test(key)) {
+        const index = parseInt(key) - 1;
+        if (index < currentQuestion.options.length) {
+          handleToggleOption(currentQuestion.options[index].id);
+        }
+      }
+
+      // Enter o Space: Confirmar o Siguiente
+      if (key === 'Enter' || key === ' ') {
+        e.preventDefault(); // Prevenir scroll al usar la barra espaciadora
+        if (!isValidated) {
+          if (selectedOptionIds.length > 0) {
+            handleConfirm();
+          }
+        } else {
+          handleNext();
+        }
+      }
+
+      // Flecha derecha: Siguiente (solo si ya está validado)
+      if (key === 'ArrowRight' && isValidated) {
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isValidated, selectedOptionIds, currentQuestion, currentIndex, questions.length]); // Dependencias importantes para closure actualizado
+
   return (
     <div className="w-full flex flex-col items-center">
       {/* Barra de progreso */}
