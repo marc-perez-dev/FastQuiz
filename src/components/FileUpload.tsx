@@ -61,10 +61,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         className={`
-          w-full p-12 border-2 border-dashed transition-all cursor-pointer flex flex-col items-center text-center
+          dropzone-container
           ${isDragging 
-            ? 'border-stone-900 bg-[#e8e6df]' 
-            : 'border-stone-400 hover:border-stone-900 bg-transparent'}
+            ? 'dropzone-active' 
+            : 'dropzone-inactive'}
         `}
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-stone-800 mb-4">
@@ -87,7 +87,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
         />
         <label
           htmlFor="file-upload"
-          className="px-8 py-3 bg-stone-900 hover:bg-stone-800 text-[#fcfbf9] font-bold text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer uppercase tracking-wider"
+          className="btn-upload"
         >
           Seleccionar Archivo
         </label>
@@ -96,7 +96,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
       {isLoading && <p className="mt-6 text-stone-900 font-medium animate-pulse">Procesando archivo...</p>}
       
       {error && (
-        <div className="mt-6 p-4 bg-red-50 border-2 border-red-900 text-red-900 font-medium text-sm w-full shadow-[4px_4px_0px_0px_rgba(127,29,29,0.2)]">
+        <div className="error-box">
           {error}
         </div>
       )}

@@ -124,7 +124,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
         <div className="w-full max-w-2xl px-4 flex justify-end mt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
           <button
             onClick={handleNext}
-            className="px-8 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-lg shadow-lg hover:bg-gray-700 dark:hover:bg-gray-200 transition-colors flex items-center gap-2"
+            className="btn-next"
           >
             {currentIndex === questions.length - 1 ? 'Ver Resultados' : 'Siguiente Pregunta'}
             <span>→</span>
