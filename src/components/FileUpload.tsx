@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from './ui/Button';
 import { parseCSV } from '../utils/csvParser';
 import type { Question } from '../types';
 
@@ -63,10 +64,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         className={`
-          dropzone-container
+          w-full p-12 border-2 border-dashed transition-all cursor-pointer flex flex-col items-center text-center
           ${isDragging 
-            ? 'dropzone-active' 
-            : 'dropzone-inactive'}
+            ? 'border-stone-900 bg-stone-200' 
+            : 'border-stone-400 hover:border-stone-900 bg-transparent'}
         `}
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-stone-800 mb-4">
@@ -87,18 +88,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onLoad }) => {
           id="file-upload"
           onChange={(e) => handleFiles(e.target.files)}
         />
-        <label
-          htmlFor="file-upload"
-          className="btn-upload"
+        <Button
+          variant="upload"
+          onClick={() => document.getElementById('file-upload')?.click()}
         >
           {t('upload.selectFile')}
-        </label>
+        </Button>
       </div>
 
       {isLoading && <p className="mt-6 text-stone-900 font-medium animate-pulse">{t('upload.processing')}</p>}
       
       {error && (
-        <div className="error-box">
+        <div className="mt-6 p-4 bg-red-50 border-2 border-red-900 text-red-900 font-medium text-sm w-full shadow-[4px_4px_0px_0px_rgba(127,29,29,0.2)]">
           {error}
         </div>
       )}

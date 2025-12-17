@@ -3,6 +3,8 @@ import type { Question, Option } from '../types';
 import { generateCSV, downloadCSV } from '../utils/csvGenerator';
 import { ConfirmationModal } from './ConfirmationModal';
 import { useTranslation } from 'react-i18next';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
 
 interface QuizEditorProps {
   initialQuestions: Question[];
@@ -78,20 +80,20 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
   return (
     <div className="w-full max-w-3xl animate-appear pb-24">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        <h2 className="title-main">Editor de Quiz</h2>
+        <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Editor de Quiz</h2>
         <div className="flex gap-2">
-           <button onClick={handleCancelClick} className="btn-secondary py-2 px-4 text-xs">
+           <Button variant="secondary" onClick={handleCancelClick} className="py-2 px-4 text-xs">
              Cancelar
-           </button>
-           <button onClick={handleDownload} className="btn-primary py-2 px-4 text-xs bg-stone-700 hover:bg-stone-600">
+           </Button>
+           <Button variant="primary" onClick={handleDownload} className="py-2 px-4 text-xs bg-stone-700 hover:bg-stone-600">
              💾 Descargar CSV
-           </button>
+           </Button>
         </div>
       </div>
 
       <div className="space-y-6">
         {questions.map((q, qIndex) => (
-          <div key={q.id} className="card-question relative group">
+          <Card variant="question" key={q.id} className="relative group">
             {/* Botón borrar pregunta */}
             <button 
               onClick={() => removeQuestion(qIndex)}
@@ -103,7 +105,7 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
             
             <label className="block font-bold mb-2 text-stone-700">Pregunta {qIndex + 1}</label>
             <input
-              className="w-full p-3 border-2 border-stone-300 focus:border-stone-900 outline-none font-serif text-lg mb-6 transition-colors bg-white"
+              className="w-full p-3 border-2 border-stone-300 focus:border-stone-900 outline-none font-serif text-lg mb-6 transition-colors bg-stone-50"
               placeholder="Escribe aquí el enunciado..."
               value={q.statement}
               onChange={(e) => updateQuestion(qIndex, 'statement', e.target.value)}
@@ -126,7 +128,7 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
                     className={`flex-1 p-2 border outline-none transition-colors ${
                       opt.isCorrect 
                         ? 'bg-green-50 border-green-300 focus:border-green-600 text-green-900 font-medium' 
-                        : 'bg-white border-stone-300 focus:border-stone-900'
+                        : 'bg-stone-50 border-stone-300 focus:border-stone-900'
                     }`}
                     placeholder={`Opción ${oIndex + 1}`}
                     value={opt.text}
@@ -150,25 +152,27 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
                 + Añadir Opción
               </button>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
 
       {/* Barra de acción flotante o fija al final */}
       <div className="fixed bottom-6 left-0 right-0 flex justify-center gap-4 z-50 pointer-events-none">
-        <div className="bg-white p-2 border-2 border-stone-900 shadow-lg pointer-events-auto flex gap-3">
-            <button 
-            onClick={() => setQuestions([...questions, createEmptyQuestion()])}
-            className="btn-secondary py-2 px-6 bg-white"
+        <div className="bg-stone-50 p-2 border-2 border-stone-900 shadow-lg pointer-events-auto flex gap-3">
+            <Button 
+              variant="secondary"
+              onClick={() => setQuestions([...questions, createEmptyQuestion()])}
+              className="py-2 px-6 bg-stone-50"
             >
             + Nueva Pregunta
-            </button>
-            <button 
-            onClick={() => onPlay(questions)}
-            className="btn-primary py-2 px-6"
+            </Button>
+            <Button 
+              variant="primary"
+              onClick={() => onPlay(questions)}
+              className="py-2 px-6"
             >
             ▶ Jugar Ahora
-            </button>
+            </Button>
         </div>
       </div>
 

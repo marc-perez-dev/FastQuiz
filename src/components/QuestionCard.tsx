@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Question, Option } from '../types';
 import { twMerge } from 'tailwind-merge';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
 
 interface QuestionCardProps {
   question: Question;
@@ -27,31 +29,32 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     if (!isValidated) {
       // Estado de Selección (Pre-validación)
       if (isSelected) {
-        return "option-selected";
+        return "border-stone-900 bg-stone-900 text-stone-50 ring-0";
       }
-      return "option-default";
+      return "border-stone-300 hover:border-stone-900 bg-stone-50 text-stone-800 hover:bg-stone-100";
     }
 
     // Estado Validado
     if (option.isCorrect) {
       // Era correcta
       if (isSelected) {
-        return "option-correct-selected"; // Acierto
+        return "border-green-800 bg-green-100 text-green-900 font-medium"; // Acierto
       } else {
-        return "option-correct-unselected"; // Correcta no marcada
+        return "border-green-700 border-dashed bg-transparent text-green-800 opacity-75"; // Correcta no marcada
       }
-    } else {
+    }
+    else {
       // No era correcta
       if (isSelected) {
-        return "option-wrong-selected"; // Fallo
+        return "border-red-800 bg-red-100 text-red-900 font-medium"; // Fallo
       }
-      return "option-disabled"; // Irrelevante
+      return "border-stone-200 text-stone-400 opacity-50"; // Irrelevante
     }
   };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
-      <div className="card-question">
+      <Card variant="question">
         <h2 className="text-2xl font-bold text-stone-900 mb-8 leading-snug font-serif">
           {question.statement}
         </h2>
@@ -63,18 +66,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               onClick={() => !isValidated && onToggleOption(option.id)}
               disabled={isValidated}
               className={twMerge(
-                "option-btn-base group",
+                "w-full text-left p-5 border-2 transition-all duration-200 flex items-start group",
                 getOptionStyles(option),
                 isValidated ? "cursor-default" : "cursor-pointer active:translate-y-1"
               )}
             >
               {/* Indicador de tecla (Badge) */}
               <div className={twMerge(
-                "option-badge",
+                "flex items-center justify-center w-8 h-8 mr-4 text-sm font-bold border-2 shrink-0 transition-colors",
                 selectedOptionIds.includes(option.id) && !isValidated
-                  ? "option-badge-selected" 
-                  : "option-badge-default",
-                isValidated && "option-badge-faded"
+                  ? "border-stone-50 text-stone-50" 
+                  : "border-stone-400 text-stone-500 group-hover:border-stone-900 group-hover:text-stone-900",
+                isValidated && "border-transparent opacity-50"
               )}>
                 {index + 1}
               </div>
@@ -93,17 +96,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             </button>
           ))}
         </div>
-      </div>
+      </Card>
 
       <div className="flex justify-end">
         {!isValidated && (
-          <button
+          <Button
             onClick={onConfirm}
             disabled={selectedOptionIds.length === 0}
-            className="btn-primary"
+            variant="primary"
           >
             {t('questionCard.confirm')}
-          </button>
+          </Button>
         )}
       </div>
     </div>

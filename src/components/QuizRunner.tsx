@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Question } from '../types';
 import { QuestionCard } from './QuestionCard';
+import { Button } from './ui/Button';
 
 interface QuizRunnerProps {
   questions: Question[];
@@ -104,15 +105,15 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
   return (
     <div className="w-full flex flex-col items-center">
       {/* Barra de progreso */}
-      <div className="w-full max-w-2xl px-4 mb-4 flex justify-between text-sm text-gray-500 dark:text-gray-400 font-medium">
+      <div className="w-full max-w-2xl px-4 mb-4 flex justify-between text-sm text-stone-500 font-medium">
         <span>{t('quiz.question', { current: currentIndex + 1, total: questions.length })}</span>
         <span>{t('quiz.score', { score })}</span>
       </div>
       
       <div className="w-full max-w-2xl px-4 mb-6">
-        <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-2 w-full bg-stone-200 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-blue-500 transition-all duration-300 ease-out"
+            className="h-full bg-earth-green transition-all duration-300 ease-out"
             style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
           />
         </div>
@@ -129,13 +130,13 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
       {/* Botón Siguiente (separado de QuestionCard para control de flujo) */}
       {isValidated && (
         <div className="w-full max-w-2xl px-4 flex justify-end mt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <button
+          <Button
             onClick={handleNext}
-            className="btn-next"
+            variant="next"
           >
             {currentIndex === questions.length - 1 ? t('quiz.viewResults') : t('quiz.next')}
             <span>→</span>
-          </button>
+          </Button>
         </div>
       )}
     </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
 
 interface ResultsScreenProps {
   score: number;
@@ -29,28 +31,30 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, total, onRe
       <h2 className="text-4xl font-bold text-stone-900 mb-2 font-serif">{t('results.title')}</h2>
       <p className="text-xl font-medium mb-12 text-stone-600 italic font-serif">{message}</p>
 
-      <div className="card-result">
+      <Card variant="result">
         <div className="text-7xl font-bold text-stone-900 tracking-tighter">
           {percentage}%
         </div>
         <div className="text-lg text-stone-500 mt-2 font-mono border-t-2 border-stone-200 pt-2 w-32">
           {score} / {total}
         </div>
-      </div>
+      </Card>
 
       <div className="flex flex-col sm:flex-row gap-6 w-full max-w-lg">
-        <button
+        <Button
           onClick={onRestart}
-          className="flex-1 btn-primary"
+          className="flex-1"
+          variant="primary"
         >
           {t('results.retry')}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={onNewFile}
-          className="flex-1 btn-secondary"
+          className="flex-1"
+          variant="secondary"
         >
           {t('results.newFile')}
-        </button>
+        </Button>
       </div>
     </div>
   );

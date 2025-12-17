@@ -9,12 +9,12 @@ export const LanguageSelector: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-1 items-center bg-stone-100 rounded-lg p-1 border border-stone-200">
+    <div className="flex gap-1 items-center bg-stone-200 rounded-lg p-1 border border-stone-300">
       <button 
         onClick={() => changeLanguage('es')} 
         className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
           i18n.resolvedLanguage === 'es' 
-            ? 'bg-white text-stone-900 shadow-sm' 
+            ? 'bg-stone-50 text-stone-900 shadow-sm' 
             : 'text-stone-500 hover:text-stone-900'
         }`}
       >
@@ -24,7 +24,7 @@ export const LanguageSelector: React.FC = () => {
         onClick={() => changeLanguage('en')} 
         className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
           i18n.resolvedLanguage === 'en' 
-            ? 'bg-white text-stone-900 shadow-sm' 
+            ? 'bg-stone-50 text-stone-900 shadow-sm' 
             : 'text-stone-500 hover:text-stone-900'
         }`}
       >
