@@ -37,7 +37,10 @@
     "practice": "Sigue practicando 💪",
     "retry": "Repetir Examen",
     "newFile": "Cargar Otro CSV",
-    "editQuestions": "¿Hay algún error? Editar preguntas"
+    "editQuestions": "¿Hay algún error? Editar preguntas",
+    "reviewFailed": "Repasar Fallidas",
+    "copyFailed": "Copiar Fallidas",
+    "copied": "¡Copiado al portapapeles!"
   },
   "questionCard": {
      "confirm": "Confirmar Respuesta"

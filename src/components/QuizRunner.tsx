@@ -6,13 +6,14 @@ import { Button } from './ui/Button';
 
 interface QuizRunnerProps {
   questions: Question[];
-  onFinish: (score: number, total: number) => void;
+  onFinish: (score: number, total: number, failedQuestions: Question[]) => void;
 }
 
 export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [failedQuestions, setFailedQuestions] = useState<Question[]>([]);
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [isValidated, setIsValidated] = useState(false);
 
@@ -51,6 +52,8 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
 
     if (isCorrect) {
       setScore(prev => prev + 1);
+    } else {
+      setFailedQuestions(prev => [...prev, currentQuestion]);
     }
   }, [setIsValidated, currentQuestion, selectedOptionIds, setScore]);
 
@@ -58,9 +61,9 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(prev => prev + 1);
     } else {
-      onFinish(score, questions.length); // Nota: score ya se actualizó en handleConfirm
+      onFinish(score, questions.length, failedQuestions); // Nota: score ya se actualizó en handleConfirm
     }
-  }, [currentIndex, questions.length, onFinish, score, setCurrentIndex]);
+  }, [currentIndex, questions.length, onFinish, score, failedQuestions, setCurrentIndex]);
 
   // Manejador de teclado global
   useEffect(() => {

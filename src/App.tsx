@@ -15,6 +15,7 @@ type AppState = 'upload' | 'quiz' | 'results' | 'editor';
 function App() {
   const { t } = useTranslation();
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [failedQuestions, setFailedQuestions] = useState<Question[]>([]);
   const [appState, setAppState] = useState<AppState>('upload');
   const [finalResult, setFinalResult] = useState({ score: 0, total: 0 });
 
@@ -23,14 +24,20 @@ function App() {
     setAppState('quiz');
   };
 
-  const handleFinish = (score: number, total: number) => {
+  const handleFinish = (score: number, total: number, failed: Question[]) => {
     setFinalResult({ score, total });
+    setFailedQuestions(failed);
     setAppState('results');
   };
 
   const handleRestart = () => {
     // Re-barajar las preguntas para que el orden sea distinto
     setQuestions(prev => shuffleArray([...prev]));
+    setAppState('quiz');
+  };
+
+  const handleReviewFailed = () => {
+    setQuestions(shuffleArray([...failedQuestions]));
     setAppState('quiz');
   };
 
@@ -160,8 +167,10 @@ function App() {
             <ResultsScreen 
               score={finalResult.score} 
               total={finalResult.total}
+              failedQuestions={failedQuestions}
               onRestart={handleRestart}
               onNewFile={handleNewFile}
+              onReviewFailed={handleReviewFailed}
             />
             <button 
               onClick={() => handleOpenEditor(questions)}

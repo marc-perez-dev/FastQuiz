@@ -37,7 +37,10 @@
     "practice": "Keep practicing 💪",
     "retry": "Retry Quiz",
     "newFile": "Upload Another CSV",
-    "editQuestions": "Found a mistake? Edit questions"
+    "editQuestions": "Found a mistake? Edit questions",
+    "reviewFailed": "Review Failed",
+    "copyFailed": "Copy Failed",
+    "copied": "Copied to clipboard!"
   },
   "questionCard": {
      "confirm": "Check Answer"
