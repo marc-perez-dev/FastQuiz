@@ -43,7 +43,8 @@
     "copied": "¡Copiado al portapapeles!"
   },
   "questionCard": {
-     "confirm": "Confirmar Respuesta"
+     "confirm": "Confirmar Respuesta",
+     "multipleChoice": "Selecciona todas las opciones correctas"
   },
   "editor": {
     "cancelTitle": "¿Estás seguro?",

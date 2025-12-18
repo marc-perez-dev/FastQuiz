@@ -59,6 +59,12 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           {question.statement}
         </h2>
 
+        {question.options.filter(o => o.isCorrect).length > 1 && (
+          <div className="mb-6 inline-block px-3 py-1 border-2 border-stone-900 bg-yellow-100 text-stone-900 text-sm font-bold shadow-[2px_2px_0px_0px_rgba(28,25,23,1)]">
+             {t('questionCard.multipleChoice')}
+          </div>
+        )}
+
         <div className="space-y-4">
           {question.options.map((option, index) => (
             <button

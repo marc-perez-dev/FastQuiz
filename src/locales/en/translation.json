@@ -43,7 +43,8 @@
     "copied": "Copied to clipboard!"
   },
   "questionCard": {
-     "confirm": "Check Answer"
+     "confirm": "Check Answer",
+     "multipleChoice": "Select all correct options"
   },
   "editor": {
     "cancelTitle": "Are you sure?",
