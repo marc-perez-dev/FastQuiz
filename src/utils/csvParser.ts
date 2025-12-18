@@ -7,6 +7,17 @@ export type CSVFormat = 'standard' | 'legacy' | 'simple' | 'auto';
 const TRUTHY_VALUES = ['true', 'verdadero', 'yes', 'si', 'sí', 'v', 't', 's', '1'];
 const FALSY_VALUES = ['false', 'falso', 'no', 'f', 'n', '0'];
 
+// Helper para limpiar textos que el parser no pudo procesar correctamente (ej. espacios antes de comillas)
+const cleanCSVText = (text: string | undefined): string => {
+  if (!text) return '';
+  let cleaned = text.trim();
+  // Si el texto sigue entre comillas (artefacto del CSV), las quitamos y des-escapamos comillas dobles internas
+  if (cleaned.length >= 2 && cleaned.startsWith('"') && cleaned.endsWith('"')) {
+    cleaned = cleaned.slice(1, -1).replace(/""/g, '"');
+  }
+  return cleaned;
+};
+
 export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Question[]> => {
   return new Promise((resolve, reject) => {
     Papa.parse(file, {
@@ -78,7 +89,7 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
             // Ignorar filas vacías
             if (!row || row.length < 2 || !row[0]) continue;
 
-            const statement = row[0].trim();
+            const statement = cleanCSVText(row[0]);
             if (!statement) continue;
 
             const options: Option[] = [];
@@ -94,7 +105,7 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
               // Standard Format (New): Question, Option1, IsCorrect1, Option2, IsCorrect2, ...
               // Iterate pairs from column 1
               for (let j = 1; j < row.length; j += 2) {
-                const optionText = row[j]?.trim();
+                const optionText = cleanCSVText(row[j]);
                 
                 // If no option text, skip
                 if (!optionText) continue;
@@ -111,7 +122,7 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
               // Legacy Format: Question, Opt1, Opt2, Opt3, Opt4, Bool1, Bool2, Bool3, Bool4
               // We expect 4 options and 4 correctness indicators.
               for (let j = 0; j < 4; j++) { 
-                const optionText = row[j + 1]?.trim(); // Options are from column 1 to 4
+                const optionText = cleanCSVText(row[j + 1]); // Options are from column 1 to 4
                 const isCorrect = toBoolean(row[j + 5]); // Correctness indicators are from column 5 to 8
 
                 if (optionText) { 
@@ -128,17 +139,18 @@ export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Qu
                // Columns 2+ are ALWAYS incorrect.
                
                // 1. Process Correct Answer (Column 1)
-               if (row[1] && row[1].trim()) {
+               const correctText = cleanCSVText(row[1]);
+               if (correctText) {
                  options.push({
                    id: crypto.randomUUID(),
-                   text: row[1].trim(),
+                   text: correctText,
                    isCorrect: true
                  });
                }
 
                // 2. Process Incorrect Answers (Columns 2+)
                for (let j = 2; j < row.length; j++) {
-                 const optionText = row[j]?.trim();
+                 const optionText = cleanCSVText(row[j]);
                  if (optionText) {
                    options.push({
                      id: crypto.randomUUID(),
