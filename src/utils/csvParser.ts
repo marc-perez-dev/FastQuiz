@@ -21,6 +21,11 @@ const cleanCSVText = (text: string | undefined): string => {
 export const parseCSV = (file: File, format: CSVFormat = 'standard'): Promise<Question[]> => {
   return new Promise((resolve, reject) => {
     Papa.parse(file, {
+      beforeFirstChunk: (chunk) => {
+        // Fix for CSVs with spaces after commas causing parsing issues with quoted fields containing commas
+        // Transforms: ..., "Text, with comma", ... -> ...,"Text, with comma",...
+        return chunk.replace(/,\s+"/g, ',"');
+      },
       complete: (results) => {
         try {
           const questions: Question[] = [];
