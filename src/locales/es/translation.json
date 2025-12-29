@@ -21,7 +21,13 @@
     "selectFile": "Seleccionar Archivo",
     "errorExtension": "Por favor, sube un archivo con extensión .csv",
     "errorProcessing": "Ocurrió un error al procesar el archivo.",
-    "errorEmpty": "El archivo CSV no contiene preguntas válidas o tiene un formato incorrecto."
+    "errorEmpty": "El archivo CSV no contiene preguntas válidas o tiene un formato incorrecto.",
+    "tabFile": "Subir Archivo",
+    "tabText": "Pegar Texto",
+    "textModeDesc": "Pega o escribe directamente el contenido de tu CSV.",
+    "pastePlaceholder": "Pega aquí el contenido de tu CSV...",
+    "generate": "Generar Quiz",
+    "downloadCsv": "Descargar CSV"
   },
   "quiz": {
     "question": "Pregunta {{current}} de {{total}}",
