@@ -17,17 +17,6 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [isValidated, setIsValidated] = useState(false);
 
-  // Reiniciar estado interno al cambiar de pregunta
-  useEffect(() => {
-    // Defer state updates to avoid synchronous setState calls within the effect
-    const timeoutId = setTimeout(() => {
-      setSelectedOptionIds([]);
-      setIsValidated(false);
-    }, 0);
-
-    return () => clearTimeout(timeoutId);
-  }, [currentIndex]);
-
   const currentQuestion = questions[currentIndex];
 
   const handleToggleOption = (optionId: string) => {
@@ -59,11 +48,13 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, onFinish }) =
 
   const handleNext = useCallback(() => {
     if (currentIndex < questions.length - 1) {
+      setIsValidated(false);
+      setSelectedOptionIds([]);
       setCurrentIndex(prev => prev + 1);
     } else {
       onFinish(score, questions.length, failedQuestions); // Nota: score ya se actualizó en handleConfirm
     }
-  }, [currentIndex, questions.length, onFinish, score, failedQuestions, setCurrentIndex]);
+  }, [currentIndex, questions.length, onFinish, score, failedQuestions]);
 
   // Manejador de teclado global
   useEffect(() => {
