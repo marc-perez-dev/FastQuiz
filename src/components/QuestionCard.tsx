@@ -53,33 +53,33 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4">
+    <div className="w-full max-w-2xl mx-auto p-2 md:p-4">
       <Card variant="question">
-        <h2 className="text-2xl font-bold text-stone-900 mb-8 leading-snug font-serif">
+        <h2 className="text-xl font-bold text-stone-900 mb-4 leading-snug font-serif">
           {question.statement}
         </h2>
 
         {question.options.filter(o => o.isCorrect).length > 1 && (
-          <div className="mb-6 inline-block px-3 py-1 border-2 border-stone-900 bg-yellow-100 text-stone-900 text-sm font-bold shadow-[2px_2px_0px_0px_rgba(28,25,23,1)]">
+          <div className="mb-4 inline-block px-3 py-1 border-2 border-stone-900 bg-yellow-100 text-stone-900 text-xs font-bold shadow-[2px_2px_0px_0px_rgba(28,25,23,1)]">
              {t('questionCard.multipleChoice')}
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.options.map((option, index) => (
             <button
               key={option.id}
               onClick={() => !isValidated && onToggleOption(option.id)}
               disabled={isValidated}
               className={twMerge(
-                "w-full text-left p-5 border-2 transition-all duration-200 flex items-start group",
+                "w-full text-left p-3 border-2 transition-all duration-200 flex items-start group h-full",
                 getOptionStyles(option),
                 isValidated ? "cursor-default" : "cursor-pointer active:translate-y-1"
               )}
             >
               {/* Indicador de tecla (Badge) */}
               <div className={twMerge(
-                "flex items-center justify-center w-8 h-8 mr-4 text-sm font-bold border-2 shrink-0 transition-colors",
+                "flex items-center justify-center w-6 h-6 mr-3 text-xs font-bold border-2 shrink-0 transition-colors mt-0.5",
                 selectedOptionIds.includes(option.id) && !isValidated
                   ? "border-stone-50 text-stone-50" 
                   : "border-stone-400 text-stone-500 group-hover:border-stone-900 group-hover:text-stone-900",
@@ -88,16 +88,16 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 {index + 1}
               </div>
 
-              <div className="flex-1 text-lg">
+              <div className="flex-1 text-base leading-tight">
                 {option.text}
               </div>
               
               {/* Iconos de feedback */}
               {isValidated && option.isCorrect && (
-                <span className="text-green-700 font-bold ml-3 text-xl">✓</span>
+                <span className="text-green-700 font-bold ml-2 text-lg">✓</span>
               )}
               {isValidated && !option.isCorrect && selectedOptionIds.includes(option.id) && (
-                <span className="text-red-700 font-bold ml-3 text-xl">✗</span>
+                <span className="text-red-700 font-bold ml-2 text-lg">✗</span>
               )}
             </button>
           ))}
@@ -110,6 +110,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             onClick={onConfirm}
             disabled={selectedOptionIds.length === 0}
             variant="primary"
+            className="py-2 px-6"
           >
             {t('questionCard.confirm')}
           </Button>
