@@ -1,7 +1,4 @@
 # FastQuiz
-¡Claro que sí! Aquí tienes la versión actualizada del README en inglés, manteniendo el mismo estilo e incorporando la información sobre el despliegue automático:
-
-FastQuiz
 This project is a fast and simple web application that allows you to generate and take interactive quizzes directly from CSV files. It stands out for its focus on speed and ease of use, all wrapped up in a clean, neobrutalist design.
 
 To achieve this, the application is built on React 19 using Vite as the development environment. The main language used is TypeScript, which provides strict typing for the program's data and structures. The interface is styled using Tailwind CSS v4 utilities, while the core functionality of reading and processing the CSV files relies on the Papaparse library. Additionally, it incorporates i18next to manage internationalization and natively support multiple languages.
