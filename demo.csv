@@ -1,5 +1,5 @@
-Pregunta,Opción 1,Correcta,Opción 2,Correcta,Opción 3,Correcta,Opción 4,Correcta
-¿De qué color es el caballo blanco de Santiago?,Blanco,TRUE,Negro,FALSE,Marrón,FALSE,,
-"¿Cuáles de estos son lenguajes de programación?",HTML,FALSE,Python,TRUE,CSS,FALSE,Java,TRUE
-¿Cuánto es 2 + 2?,3,FALSE,4,TRUE,5,FALSE,,
-"Selecciona los ingredientes de una tortilla de patatas clásica (con cebolla)",Huevos,TRUE,Patatas,TRUE,Cebolla,TRUE,Chorizo,FALSE
+Pregunta,Opción 1,Correcta,Opción 2,Correcta,Opción 3,Correcta,Opción 4,Correcta,Explicación
+¿De qué color es el caballo blanco de Santiago?,Blanco,TRUE,Negro,FALSE,Marrón,FALSE,,,Es una pregunta trampa clásica: el color está en el enunciado.
+"¿Cuáles de estos son lenguajes de programación?",HTML,FALSE,Python,TRUE,CSS,FALSE,Java,TRUE,HTML y CSS son lenguajes de marcado y estilos; Python y Java son de propósito general.
+¿Cuánto es 2 + 2?,3,FALSE,4,TRUE,5,FALSE,,,"Aritmética básica: 2 unidades más otras 2 suman 4."
+"Selecciona los ingredientes de una tortilla de patatas clásica (con cebolla)",Huevos,TRUE,Patatas,TRUE,Cebolla,TRUE,Chorizo,FALSE,La receta tradicional lleva huevo; patata y cebolla. El chorizo es opcional y no forma parte de la base clásica.

@@ -11,8 +11,8 @@
     "formatSimple": "Simple: Question, Correct Answer, Incorrect 1, Incorrect 2...",
     "formatLegacy": "Legacy: Question, Opt1, Opt2, Opt3, Opt4, IsCorrect1, IsCorrect2...",
     "orPreference": "Or if you prefer",
-    "csvExampleHeader": "Question,Option 1,Correct?,Option 2,Correct?,...",
-    "csvExampleRow1": "\"Capital of France?\",\"Paris\",TRUE,\"London\",FALSE",
+    "csvExampleHeader": "Question,Option 1,Correct?,Option 2,Correct?,...,[Explanation]",
+    "csvExampleRow1": "\"Capital of France?\",\"Paris\",TRUE,\"London\",FALSE,\"Paris has been the capital since the 6th century.\"",
     "csvExampleRow2": "\"Primary light colors?\",\"Red\",TRUE,\"Green\",TRUE,\"Yellow\",FALSE"
   },
   "upload": {
@@ -50,7 +50,8 @@
   },
   "questionCard": {
      "confirm": "Check Answer",
-     "multipleChoice": "Select all correct options"
+     "multipleChoice": "Select all correct options",
+     "explanation": "Explanation"
   },
   "editor": {
     "cancelTitle": "Are you sure?",

@@ -102,6 +102,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             </button>
           ))}
         </div>
+
+        {isValidated && question.explanation && (
+          <div className="mt-6 p-4 border-2 border-stone-900 bg-blue-50 text-stone-900 animate-in fade-in slide-in-from-top-2 duration-300 shadow-[4px_4px_0px_0px_rgba(28,25,23,1)]">
+            <h3 className="text-sm font-bold uppercase tracking-wider mb-2 flex items-center border-b-2 border-stone-900 pb-1">
+              <span className="mr-2">💡</span>
+              {t('questionCard.explanation')}
+            </h3>
+            <p className="text-base leading-relaxed">
+              {question.explanation}
+            </p>
+          </div>
+        )}
       </Card>
 
       <div className="flex justify-end">

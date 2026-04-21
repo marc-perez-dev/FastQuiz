@@ -152,6 +152,19 @@ export const QuizEditor: React.FC<QuizEditorProps> = ({ initialQuestions, onCanc
                 + Añadir Opción
               </button>
             </div>
+
+            {/* Campo de Explicación */}
+            <div className="mt-6 border-t-2 border-dashed border-stone-200 pt-4">
+              <label className="block text-xs font-bold uppercase text-stone-400 mb-1 flex items-center">
+                <span className="mr-1">💡</span> Explicación (opcional)
+              </label>
+              <textarea
+                className="w-full p-2 text-sm border-2 border-stone-200 focus:border-stone-900 outline-none transition-colors bg-stone-50 min-h-[60px] resize-none"
+                placeholder="Escribe el porqué de la respuesta correcta..."
+                value={q.explanation || ''}
+                onChange={(e) => updateQuestion(qIndex, 'explanation', e.target.value)}
+              />
+            </div>
           </Card>
         ))}
       </div>

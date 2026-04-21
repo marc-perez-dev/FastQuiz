@@ -11,8 +11,8 @@
     "formatSimple": "Simple: Pregunta, Respuesta Correcta, Incorrecta 1, Incorrecta 2...",
     "formatLegacy": "Heredado: Pregunta, Op1, Op2, Op3, Op4, EsCorrecta1, EsCorrecta2...",
     "orPreference": "O si lo prefieres",
-    "csvExampleHeader": "Pregunta,Opción 1,Correcta?,Opción 2,Correcta?,...",
-    "csvExampleRow1": "\"¿Capital de Francia?\",\"París\",TRUE,\"Londres\",FALSE",
+    "csvExampleHeader": "Pregunta,Opción 1,Correcta?,Opción 2,Correcta?,...,[Explicación]",
+    "csvExampleRow1": "\"¿Capital de Francia?\",\"París\",TRUE,\"Londres\",FALSE,\"París es la capital desde el s. VI.\"",
     "csvExampleRow2": "\"¿Colores primarios luz?\",\"Rojo\",TRUE,\"Verde\",TRUE,\"Amarillo\",FALSE"
   },
   "upload": {
@@ -50,7 +50,8 @@
   },
   "questionCard": {
      "confirm": "Confirmar Respuesta",
-     "multipleChoice": "Selecciona todas las opciones correctas"
+     "multipleChoice": "Selecciona todas las opciones correctas",
+     "explanation": "Explicación"
   },
   "editor": {
     "cancelTitle": "¿Estás seguro?",

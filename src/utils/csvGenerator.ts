@@ -1,20 +1,27 @@
 import type { Question } from '../types';
 
 export const generateCSV = (questions: Question[]): string => {
-  // Cabecera compatible con tu parser (formato Standard)
-  const header = ['Pregunta', 'Opción 1', 'Correcta?', 'Opción 2', 'Correcta?', 'Opción 3', 'Correcta?', 'Opción 4', 'Correcta?'];
+  // Cabecera simplificada
+  const header = ['Pregunta', 'Opción 1', 'Correcta?', 'Opción 2', 'Correcta?', '...'];
   
   const rows = questions.map(q => {
-    // Escapar comillas dobles en el enunciado duplicándolas
-    const statementEscaped = q.statement.split('"').join('""');
-    const row: string[] = [`"${statementEscaped}"`];
+    // Escapar comillas dobles duplicándolas
+    const escape = (text: string) => `"${text.split('"').join('""')}"`;
+    
+    const row: string[] = [escape(q.statement)];
 
     // Añadimos las opciones y sus booleanos
     q.options.forEach(opt => {
-      const optEscaped = opt.text.split('"').join('""');
-      row.push(`"${optEscaped}"`);
+      row.push(escape(opt.text));
       row.push(opt.isCorrect ? 'TRUE' : 'FALSE');
     });
+
+    // Si hay explicación, la añadimos al final. 
+    // Como 1 (statement) + 2*N (options) es impar, añadir la explicación 
+    // hace que la fila sea par, activando la detección en el parser.
+    if (q.explanation) {
+      row.push(escape(q.explanation));
+    }
 
     return row.join(',');
   });

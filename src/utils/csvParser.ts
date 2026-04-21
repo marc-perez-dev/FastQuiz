@@ -20,7 +20,7 @@ const cleanCSVText = (text: string | undefined): string => {
 
 export const parseCSV = (file: File | string, format: CSVFormat = 'standard'): Promise<Question[]> => {
   return new Promise((resolve, reject) => {
-    Papa.parse(file as any, {
+    Papa.parse(file, {
       beforeFirstChunk: (chunk) => {
         // Fix for CSVs with spaces after commas causing parsing issues with quoted fields containing commas
         // Transforms: ..., "Text, with comma", ... -> ...,"Text, with comma",...
@@ -106,29 +106,34 @@ export const parseCSV = (file: File | string, format: CSVFormat = 'standard'): P
               return TRUTHY_VALUES.includes(normalized);
             };
 
+            let explanation = '';
+
             if (usedFormat === 'standard') {
-              // Standard Format (New): Question, Option1, IsCorrect1, Option2, IsCorrect2, ...
-              // Iterate pairs from column 1
-              for (let j = 1; j < row.length; j += 2) {
+              // Standard Format (New): Question, Option1, IsCorrect1, Option2, IsCorrect2, ..., [Explanation]
+              // If row length is even, the last column is the explanation
+              const hasExplanation = row.length % 2 === 0;
+              const limit = hasExplanation ? row.length - 1 : row.length;
+
+              for (let j = 1; j < limit; j += 2) {
                 const optionText = cleanCSVText(row[j]);
-                
-                // If no option text, skip
                 if (!optionText) continue;
 
                 const isCorrect = toBoolean(row[j + 1]);
-
                 options.push({
                   id: crypto.randomUUID(),
                   text: optionText,
                   isCorrect
                 });
               }
+
+              if (hasExplanation) {
+                explanation = cleanCSVText(row[row.length - 1]);
+              }
             } else if (usedFormat === 'legacy') {
-              // Legacy Format: Question, Opt1, Opt2, Opt3, Opt4, Bool1, Bool2, Bool3, Bool4
-              // We expect 4 options and 4 correctness indicators.
+              // Legacy Format: Question, Opt1, Opt2, Opt3, Opt4, Bool1, Bool2, Bool3, Bool4, [Explanation]
               for (let j = 0; j < 4; j++) { 
-                const optionText = cleanCSVText(row[j + 1]); // Options are from column 1 to 4
-                const isCorrect = toBoolean(row[j + 5]); // Correctness indicators are from column 5 to 8
+                const optionText = cleanCSVText(row[j + 1]);
+                const isCorrect = toBoolean(row[j + 5]);
 
                 if (optionText) { 
                   options.push({
@@ -137,6 +142,10 @@ export const parseCSV = (file: File | string, format: CSVFormat = 'standard'): P
                     isCorrect
                   });
                 }
+              }
+              // If there's a 10th column, it's the explanation
+              if (row.length >= 10) {
+                explanation = cleanCSVText(row[9]);
               }
             } else if (usedFormat === 'simple') {
                // Simple Format: Question, CorrectAnswer, Option2, Option3, Option4...
@@ -170,7 +179,8 @@ export const parseCSV = (file: File | string, format: CSVFormat = 'standard'): P
               questions.push({
                 id: crypto.randomUUID(),
                 statement,
-                options: shuffleArray(options)
+                options: shuffleArray(options),
+                explanation: explanation || undefined
               });
             }
           }

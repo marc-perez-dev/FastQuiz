@@ -8,6 +8,7 @@ export interface Question {
   id: string;
   statement: string;
   options: Option[];
+  explanation?: string;
 }
 
 export interface QuizResult {
